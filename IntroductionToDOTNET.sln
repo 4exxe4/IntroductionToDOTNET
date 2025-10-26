@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTypes", "DataTypes\Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrays", "Arrays\Arrays.csproj", "{A7581BDC-1BAA-4E00-876A-5CF541ACAC1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry", "Geometry\Geometry.csproj", "{BECC28FF-E506-47D9-B5E4-E776B2E3714C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A7581BDC-1BAA-4E00-876A-5CF541ACAC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7581BDC-1BAA-4E00-876A-5CF541ACAC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7581BDC-1BAA-4E00-876A-5CF541ACAC1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BECC28FF-E506-47D9-B5E4-E776B2E3714C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BECC28FF-E506-47D9-B5E4-E776B2E3714C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BECC28FF-E506-47D9-B5E4-E776B2E3714C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BECC28FF-E506-47D9-B5E4-E776B2E3714C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
