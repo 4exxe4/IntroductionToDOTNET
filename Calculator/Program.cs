@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
@@ -21,32 +23,16 @@ namespace Calculator
         {
             Console.Write("Введите арифметическое выражение: ");
             //string expression = "22*33/44/2*8*3";
-            string expression = "5+ (1+(2+(22+3)*2 + (33-44))/(2+8)*3+1)*2 - 2";
+            //expression = "(4*(2+3) + (3+2)*4)*3";
+            //expression = "11 +(55 + (22+33)/4-5)*2*3+3) * (3+2)";
+            string expression = "5 + ( 1 + ( 2 + (22 + 3) * 2 + (33 - 44)) / (2 + 8) * 3 + 1) * 2 - 2";
             //string expression = "22+33-44/2+8*3+1";
             //string expression = Console.ReadLine();
             expression = expression.Replace(",", ".");
             expression = expression.Replace(" ", "");
-            Console.WriteLine(expression);
+            //Console.WriteLine(expression);
 
-            operands = expression.Split(operators);
-            values = new double[operands.Length];
-            for (int i = 0; i < operands.Length; i++)
-            {
-                values[i] = Convert.ToDouble(operands[i]);
-                Console.Write($"{values[i]}\t");
-            }
-            Console.WriteLine();
-
-            /*for (int i = 0; i < digits.Length; i++)
-			{
-				Console.Write($"{digits[i]}\t");
-			}
-			Console.WriteLine();*/
-
-            operations = expression.Split(digits);
-            operations = operations.Where(operation => operation != "").ToArray();  //LINQ
-            
-            Console.WriteLine(Calculate(expression));
+            Console.WriteLine(Explorer(expression));
 #if CALC_IF
 			if (expression.Contains("+"))
 				Console.WriteLine($"{values[0]} + {values[1]} = {values[0] + values[1]}");
@@ -70,8 +56,69 @@ namespace Calculator
 #endif
 
         }
+        static string Explorer(string expression)
+        {
+            for (int i = 0; i<expression.Length; i++)
+            {
+                if (expression[i] == '(')
+                {
+                    for(int j = i + 1; j < expression.Length; j++)
+                    {
+                        if(expression[j] == ')')
+                        {
+                            string substring = expression.Substring(i + 1, j-i-1);
+                            //if (expression.Count(s => s == '(') != expression.Count(s => s == ')')) return substring;//expression.Substring(0,j);
+                            //double local_result = Calculate(substring.Substring(1,substring.Length - 2));
+                            //expression = expression.Replace(substring, local_result.ToString());
+                            //break;
+                            if(!substring.Contains('(') && !substring.Contains(')'))
+                            {
+                                double result = Calculate(substring);
+                                Program.expression = Program.expression.Replace($"({substring})", result.ToString());
+                                Explorer(Program.expression);
+                            }
+                        }
+                        if (expression[j] == '(')
+                        {
+                            //string substring = Explorer(expression.Substring(j));
+                            //expression = expression.Replace(substring, Calculate(substring.Substring(1,substring.Length-2)).ToString());
+                            string substring = expression.Substring(j+1, expression.Length-j-1);
+                            Explorer(substring);
+                        }
+                    }
+                }
+                if (expression[i] == ')')
+                {
+                    string substring = expression.Substring(0, i);
+                    if(!substring.Contains('(') && !substring.Contains(')'))
+                    {
+                        double result = Calculate(substring);
+                        Program.expression = Program.expression.Replace($"({substring})", result.ToString());
+                    }
+                    Explorer(Program.expression);
+                }
+            }
+            return null;
+        }
         static double Calculate (string expression)
         {
+           operands = expression.Split(operators);
+           values = new double[operands.Length];
+            for (int i = 0; i < operands.Length; i++)
+            {
+                values[i] = Convert.ToDouble(operands[i]);
+                Console.Write($"{values[i]}\t");
+            }
+            Console.WriteLine();
+
+            /*for (int i = 0; i < digits.Length; i++)
+			{
+				Console.Write($"{digits[i]}\t");
+			}
+			Console.WriteLine();*/
+            operations = expression.Split(digits);
+            operations = operations.Where(operation => operation != "").ToArray();  //LINQ
+
             while (operations[0] != "")
             {
                 //int i = 0;
